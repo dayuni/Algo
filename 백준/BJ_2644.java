@@ -8,10 +8,10 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class BJ_2644 {
-	static int n, p1, p2;
-	static int arr[][];
-	static boolean visited[];
-	static int total[];
+	static int n, p1, p2, m, cnt = 0;
+	static int arr[][],res[];
+	static boolean v[];
+	
 	static Queue<Integer> q = new LinkedList<>();
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
@@ -19,44 +19,45 @@ public class BJ_2644 {
 		StringTokenizer st;
 
 		n = Integer.parseInt(in.readLine()); // 사람의 수
-		arr = new int[n + 1][2];
-		visited = new boolean[n + 1];
-		total = new int[n + 1];
-
+		arr = new int[n+1][n+1];			 // 인접행렬 이용
+		res = new int[n+1];					 // 촌수를 체크할 배열
+		v = new boolean[n + 1];				 // 방문 체크
 		st = new StringTokenizer(in.readLine());
 		p1 = Integer.parseInt(st.nextToken()); // 촌수 계산할 첫번째 사람
 		p2 = Integer.parseInt(st.nextToken()); // 촌수 계산할 두번째 사람
 
-		int m = Integer.parseInt(in.readLine());
+		m = Integer.parseInt(in.readLine());
 
 		for (int i = 1; i <= m; i++) {
 			st = new StringTokenizer(in.readLine());
-			arr[i][0] = Integer.parseInt(st.nextToken()); // 부모
-			arr[i][1] = Integer.parseInt(st.nextToken()); // 자식
+			int a = Integer.parseInt(st.nextToken()); // 부모
+			int b = Integer.parseInt(st.nextToken()); // 자식
+			arr[a][b]=1;
+			arr[b][a]=1;
 		}
+		
+		bfs(p1,p2);
+		
+		if(res[p2]==0)System.out.println(-1);
+		else System.out.println(res[p2]);
+		System.out.println();
 
-		System.out.println(bfs(p1, n));
 	}
 
-	public static int bfs(int p1, int N) {
-		q.offer(p1);
+	static void bfs(int a, int b) {
+		q.offer(a);
+		v[a] = true;
 		while (!q.isEmpty()) {
-			int p = q.poll();
-			visited[p] = true;
-			for (int i = 0; i < N; i++) {
-				if (arr[i][0] == p1 && !visited[arr[i][1]]) {
-					q.add(arr[i][1]);
-					total[arr[i][1]] = total[arr[i][0]] + 1;
-				} else if (arr[i][1] == p && !visited[arr[i][0]]) {
-					q.add(arr[i][0]);
-					total[arr[i][0]] = total[arr[i][1]] + 1;
+			int num = q.poll();
+			if(num==b) return;				// b에 도착하면 끝
+			for(int i=1;i<=n;i++) {
+				if(arr[num][i]==1&&!v[i]) { // 행렬의 값이 1이고 방문하지 않은 곳
+					q.offer(i);
+					v[i]=true;
+					res[i]=res[num]+1;		// 촌수를 +1 
 				}
-
-			}
-			if (!q.isEmpty() && q.peek() == p2) {
-				return total[p2];
 			}
 		}
-		return -1;
 	}
+
 }
