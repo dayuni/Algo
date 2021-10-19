@@ -30,7 +30,6 @@ public class Main {
         perm[depth] =0;
         for(int i=0;i<len;i++){
             if(visited[i])continue;
-            System.out.println(depth + " " + perm[depth] + " "+ arr[i]);
             if(perm[depth]>=arr[i])continue;
 
             visited[i]=true;
