@@ -1,0 +1,29 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        String word = in.readLine();
+        int len = word.length();
+        ArrayList<String> res = new ArrayList<>();
+        for(int i=1;i<len;i++){
+            for(int j=i+1;j<len;j++){
+                StringBuffer s1 = new StringBuffer(word.substring(0,i));
+                StringBuffer s2 = new StringBuffer(word.substring(i,j));
+                StringBuffer s3 = new StringBuffer(word.substring(j,len));
+
+                s1.reverse().append(s2.reverse()).append(s3.reverse());
+                res.add(s1.toString());
+            }
+        }
+        Collections.sort(res);
+        System.out.println(res.get(0));
+
+    }
+
+}
