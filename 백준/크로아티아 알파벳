@@ -1,0 +1,24 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main {
+	public static void main(String[] args) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		String msg = in.readLine();
+		int ans = 0;
+		String cro[] = { "c=", "c-", "dz=", "d-", "lj", "nj", "s=", "z=" };
+		int c = 0;
+		for (int i = 0; i < cro.length; i++) {
+			if (msg.contains(cro[i])) {
+				c++;
+				msg=msg.replaceAll(cro[i], "0");
+			}
+		}
+		for (int i = 0; i < msg.length(); i++) {
+			ans++;
+		}
+		
+		System.out.println(ans);
+	}
+}
