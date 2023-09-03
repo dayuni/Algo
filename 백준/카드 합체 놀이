@@ -1,0 +1,36 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
+
+public class Main {
+	static int n,m;
+	public static void main(String[] args) throws IOException {
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(in.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		PriorityQueue<Long> pq = new PriorityQueue<>();
+		st = new StringTokenizer(in.readLine());
+		for(int i=0;i<n;i++) {
+			pq.offer(Long.parseLong(st.nextToken()));
+		}
+		
+		while(m>0) {
+			long tmp = pq.poll();
+			tmp += pq.poll();
+			
+			pq.offer(tmp);
+			pq.offer(tmp);
+			m--;
+		}
+		long sum = 0;
+		while(!pq.isEmpty()) {
+			sum+=pq.poll();
+		}
+		System.out.println(sum);
+		
+		
+	}
+}
